@@ -17,10 +17,7 @@ public class SpringCommandWrapperFactory extends DefaultCommandWrapperFactory
   @Override
   public ICommand wrap(Object command)
   {
-    if (factory != null)
-    {
-      factory.autowireBean(command);
-    }
+    factory.autowireBean(command);
     return super.wrap(command);
   }
 }

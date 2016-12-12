@@ -13,18 +13,19 @@ import com.github.tonivade.resp.command.IRequest;
 import com.github.tonivade.resp.command.IResponse;
 
 @Command("getallusers")
-public class GetAllUsersCommand implements ICommand {
- 
+public class GetAllUsersCommand implements ICommand
+{
   @Autowired
   private UserRepository userRepository;
-  
+
   @Override
-  public void execute(IRequest request, IResponse response) {
+  public void execute(IRequest request, IResponse response)
+  {
     List<String> userIds = new LinkedList<>();
-    for (User user : userRepository.findAll()) {
+    for (User user : userRepository.findAll())
+    {
       userIds.add(user.getId());
     }
     response.addArray(userIds);
   }
-
 }

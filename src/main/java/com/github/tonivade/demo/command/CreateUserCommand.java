@@ -21,11 +21,15 @@ public class CreateUserCommand implements ICommand
   @Override
   public void execute(IRequest request, IResponse response)
   {
-    SafeString id = request.getParam(0);
-    SafeString name = request.getParam(1);
-
-    userRepository.save(new User(id.toString(), name.toString()));
+    userRepository.save(createUserFrom(request));
 
     response.addSimpleStr(IResponse.RESULT_OK);
+  }
+
+  private User createUserFrom(IRequest request)
+  {
+    SafeString id = request.getParam(0);
+    SafeString name = request.getParam(1);
+    return new User(id.toString(), name.toString());
   }
 }

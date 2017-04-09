@@ -8,7 +8,7 @@ import com.github.tonivade.resp.annotation.Command;
 import com.github.tonivade.resp.annotation.ParamLength;
 import com.github.tonivade.resp.command.ICommand;
 import com.github.tonivade.resp.command.IRequest;
-import com.github.tonivade.resp.command.IResponse;
+import com.github.tonivade.resp.protocol.RedisToken;
 import com.github.tonivade.resp.protocol.SafeString;
 
 @Command("createuser")
@@ -19,11 +19,11 @@ public class CreateUserCommand implements ICommand
   private UserRepository userRepository;
 
   @Override
-  public void execute(IRequest request, IResponse response)
+  public RedisToken<?> execute(IRequest request)
   {
     userRepository.save(createUserFrom(request));
 
-    response.addSimpleStr(IResponse.RESULT_OK);
+    return RedisToken.responseOk();
   }
 
   private User createUserFrom(IRequest request)

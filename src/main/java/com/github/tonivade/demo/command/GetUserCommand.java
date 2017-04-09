@@ -1,6 +1,6 @@
 package com.github.tonivade.demo.command;
 
-import static java.util.Arrays.asList;
+import static com.github.tonivade.resp.protocol.RedisToken.string;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,7 +10,7 @@ import com.github.tonivade.resp.annotation.Command;
 import com.github.tonivade.resp.annotation.ParamLength;
 import com.github.tonivade.resp.command.ICommand;
 import com.github.tonivade.resp.command.IRequest;
-import com.github.tonivade.resp.command.IResponse;
+import com.github.tonivade.resp.protocol.RedisToken;
 import com.github.tonivade.resp.protocol.SafeString;
 
 @Command("getuser")
@@ -21,7 +21,7 @@ public class GetUserCommand implements ICommand
   private UserRepository userRepository;
 
   @Override
-  public void execute(IRequest request, IResponse response)
+  public RedisToken<?> execute(IRequest request)
   {
     SafeString userId = request.getParam(0);
 
@@ -29,11 +29,11 @@ public class GetUserCommand implements ICommand
 
     if (user != null)
     {
-      response.addArray(asList("id", user.getId(), "name", user.getName()));
+      return RedisToken.array(string("id"), string(user.getId()), string("name"), string(user.getName()));
     }
     else
     {
-      response.addError("user not found: " + userId);
+      return RedisToken.error("user not found: " + userId);
     }
   }
 }

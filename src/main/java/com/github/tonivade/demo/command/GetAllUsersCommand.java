@@ -1,5 +1,7 @@
 package com.github.tonivade.demo.command;
 
+import static com.github.tonivade.resp.protocol.RedisToken.string;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import com.github.tonivade.demo.repo.UserRepository;
 import com.github.tonivade.resp.annotation.Command;
 import com.github.tonivade.resp.command.ICommand;
 import com.github.tonivade.resp.command.IRequest;
-import com.github.tonivade.resp.command.IResponse;
+import com.github.tonivade.resp.protocol.RedisToken;
 
 @Command("getallusers")
 public class GetAllUsersCommand implements ICommand
@@ -19,13 +21,13 @@ public class GetAllUsersCommand implements ICommand
   private UserRepository userRepository;
 
   @Override
-  public void execute(IRequest request, IResponse response)
+  public RedisToken<?> execute(IRequest request)
   {
-    List<String> userIds = new LinkedList<>();
+    List<RedisToken<?>> userIds = new LinkedList<>();
     for (User user : userRepository.findAll())
     {
-      userIds.add(user.getId());
+      userIds.add(string(user.getId()));
     }
-    response.addArray(userIds);
+    return RedisToken.array(userIds);
   }
 }

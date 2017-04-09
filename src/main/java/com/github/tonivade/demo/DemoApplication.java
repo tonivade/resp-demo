@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import com.github.tonivade.demo.command.CreateUserCommand;
 import com.github.tonivade.demo.command.GetAllUsersCommand;
 import com.github.tonivade.demo.command.GetUserCommand;
-import com.github.tonivade.resp.RedisServer;
+import com.github.tonivade.resp.RespServer;
 import com.github.tonivade.resp.command.CommandSuite;
 import com.github.tonivade.resp.command.CommandWrapperFactory;
 
@@ -24,9 +24,9 @@ public class DemoApplication
 
   @Bean(initMethod= "start")
   @Autowired
-  public RedisServer server(CommandSuite commands)
+  public RespServer server(CommandSuite commands)
   {
-    return new RedisServer(host, port, commands);
+    return new RespServer(host, port, commands);
   }
 
   @Bean

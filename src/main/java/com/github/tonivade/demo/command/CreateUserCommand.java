@@ -1,5 +1,7 @@
 package com.github.tonivade.demo.command;
 
+import static com.github.tonivade.resp.protocol.RedisToken.responseOk;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.tonivade.demo.repo.User;
@@ -23,7 +25,7 @@ public class CreateUserCommand implements ICommand
   {
     userRepository.save(createUserFrom(request));
 
-    return RedisToken.responseOk();
+    return responseOk();
   }
 
   private User createUserFrom(IRequest request)

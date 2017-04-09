@@ -1,5 +1,7 @@
 package com.github.tonivade.demo.command;
 
+import static com.github.tonivade.resp.protocol.RedisToken.array;
+import static com.github.tonivade.resp.protocol.RedisToken.error;
 import static com.github.tonivade.resp.protocol.RedisToken.string;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,11 @@ public class GetUserCommand implements ICommand
 
     if (user != null)
     {
-      return RedisToken.array(string("id"), string(user.getId()), string("name"), string(user.getName()));
+      return array(string("id"), string(user.getId()), string("name"), string(user.getName()));
     }
     else
     {
-      return RedisToken.error("user not found: " + userId);
+      return error("user not found: " + userId);
     }
   }
 }

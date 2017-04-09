@@ -1,5 +1,6 @@
 package com.github.tonivade.demo.command;
 
+import static com.github.tonivade.resp.protocol.RedisToken.array;
 import static com.github.tonivade.resp.protocol.RedisToken.string;
 
 import java.util.LinkedList;
@@ -28,6 +29,6 @@ public class GetAllUsersCommand implements ICommand
     {
       userIds.add(string(user.getId()));
     }
-    return RedisToken.array(userIds);
+    return array(userIds);
   }
 }

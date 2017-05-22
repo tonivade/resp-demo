@@ -4,6 +4,8 @@ import static com.github.tonivade.resp.protocol.RedisToken.array;
 import static com.github.tonivade.resp.protocol.RedisToken.error;
 import static com.github.tonivade.resp.protocol.RedisToken.string;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.tonivade.demo.repo.User;
@@ -27,15 +29,18 @@ public class GetUserCommand implements ICommand
   {
     SafeString userId = request.getParam(0);
 
-    User user = userRepository.findOne(userId.toString());
+    Optional<User> userOptional = userRepository.findById(userId.toString());
 
-    if (user != null)
-    {
-      return array(string("id"), string(user.getId()), string("name"), string(user.getName()));
-    }
-    else
-    {
-      return error("user not found: " + userId);
-    }
+    return userOptional.map(this::toArray).orElse(notFound(userId));
+  }
+
+  private RedisToken notFound(SafeString userId)
+  {
+    return error("user not found: " + userId);
+  }
+
+  private RedisToken toArray(User user)
+  {
+    return array(string("id"), string(user.getId()), string("name"), string(user.getName()));
   }
 }

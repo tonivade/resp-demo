@@ -11,18 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.github.tonivade.demo.repo.User;
 import com.github.tonivade.demo.repo.UserRepository;
 import com.github.tonivade.resp.annotation.Command;
-import com.github.tonivade.resp.command.ICommand;
-import com.github.tonivade.resp.command.IRequest;
+import com.github.tonivade.resp.command.Request;
+import com.github.tonivade.resp.command.RespCommand;
 import com.github.tonivade.resp.protocol.RedisToken;
 
 @Command("getallusers")
-public class GetAllUsersCommand implements ICommand
+public class GetAllUsersCommand implements RespCommand
 {
   @Autowired
   private UserRepository userRepository;
 
   @Override
-  public RedisToken<?> execute(IRequest request)
+  public RedisToken<?> execute(Request request)
   {
     List<RedisToken<?>> userIds = new LinkedList<>();
     for (User user : userRepository.findAll())

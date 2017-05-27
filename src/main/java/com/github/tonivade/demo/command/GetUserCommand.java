@@ -12,20 +12,20 @@ import com.github.tonivade.demo.repo.User;
 import com.github.tonivade.demo.repo.UserRepository;
 import com.github.tonivade.resp.annotation.Command;
 import com.github.tonivade.resp.annotation.ParamLength;
-import com.github.tonivade.resp.command.ICommand;
-import com.github.tonivade.resp.command.IRequest;
+import com.github.tonivade.resp.command.Request;
+import com.github.tonivade.resp.command.RespCommand;
 import com.github.tonivade.resp.protocol.RedisToken;
 import com.github.tonivade.resp.protocol.SafeString;
 
 @Command("getuser")
 @ParamLength(1)
-public class GetUserCommand implements ICommand
+public class GetUserCommand implements RespCommand
 {
   @Autowired
   private UserRepository userRepository;
 
   @Override
-  public RedisToken<?> execute(IRequest request)
+  public RedisToken<?> execute(Request request)
   {
     SafeString userId = request.getParam(0);
 

@@ -22,9 +22,9 @@ public class GetAllUsersCommand implements RespCommand
   private UserRepository userRepository;
 
   @Override
-  public RedisToken<?> execute(Request request)
+  public RedisToken execute(Request request)
   {
-    List<RedisToken<?>> userIds = new LinkedList<>();
+    List<RedisToken> userIds = new LinkedList<>();
     for (User user : userRepository.findAll())
     {
       userIds.add(string(user.getId()));

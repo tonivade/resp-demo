@@ -21,7 +21,7 @@ public class CreateUserCommand implements RespCommand
   private UserRepository userRepository;
 
   @Override
-  public RedisToken<?> execute(Request request)
+  public RedisToken execute(Request request)
   {
     userRepository.save(createUserFrom(request));
 

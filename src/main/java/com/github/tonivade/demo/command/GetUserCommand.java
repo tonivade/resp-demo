@@ -25,7 +25,7 @@ public class GetUserCommand implements RespCommand
   private UserRepository userRepository;
 
   @Override
-  public RedisToken<?> execute(Request request)
+  public RedisToken execute(Request request)
   {
     SafeString userId = request.getParam(0);
 

@@ -13,23 +13,20 @@ import com.github.tonivade.resp.command.RespCommand;
 import com.github.tonivade.resp.protocol.RedisToken;
 import com.github.tonivade.resp.protocol.SafeString;
 
-@Command("createuser")
+@Command("create user")
 @ParamLength(2)
-public class CreateUserCommand implements RespCommand
-{
+public class CreateUserCommand implements RespCommand {
   @Autowired
   private UserRepository userRepository;
 
   @Override
-  public RedisToken execute(Request request)
-  {
+  public RedisToken execute(Request request) {
     userRepository.save(createUserFrom(request));
 
     return responseOk();
   }
 
-  private User createUserFrom(Request request)
-  {
+  private User createUserFrom(Request request) {
     SafeString id = request.getParam(0);
     SafeString name = request.getParam(1);
     return new User(id.toString(), name.toString());

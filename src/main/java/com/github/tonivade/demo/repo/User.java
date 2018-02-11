@@ -9,8 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class User
-{
+public class User {
   @Column
   @Id
   private String id;
@@ -19,29 +18,24 @@ public class User
 
   public User() { }
 
-  public User(String id, String name)
-  {
+  public User(String id, String name) {
     setId(id);
     setName(name);
   }
 
-  public String getId()
-  {
+  public String getId() {
     return id;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  protected void setId(String id)
-  {
+  protected void setId(String id) {
     this.id = requireNonNull(id);
   }
 
-  protected void setName(String name)
-  {
+  protected void setName(String name) {
     this.name = requireNonNull(name);
   }
 }

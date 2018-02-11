@@ -15,18 +15,15 @@ import com.github.tonivade.resp.command.Request;
 import com.github.tonivade.resp.command.RespCommand;
 import com.github.tonivade.resp.protocol.RedisToken;
 
-@Command("getallusers")
-public class GetAllUsersCommand implements RespCommand
-{
+@Command("get all users")
+public class GetAllUsersCommand implements RespCommand {
   @Autowired
   private UserRepository userRepository;
 
   @Override
-  public RedisToken execute(Request request)
-  {
+  public RedisToken execute(Request request) {
     List<RedisToken> userIds = new LinkedList<>();
-    for (User user : userRepository.findAll())
-    {
+    for (User user : userRepository.findAll()) {
       userIds.add(string(user.getId()));
     }
     return array(userIds);

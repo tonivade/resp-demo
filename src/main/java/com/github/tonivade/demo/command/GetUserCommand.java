@@ -17,16 +17,14 @@ import com.github.tonivade.resp.command.RespCommand;
 import com.github.tonivade.resp.protocol.RedisToken;
 import com.github.tonivade.resp.protocol.SafeString;
 
-@Command("getuser")
+@Command("get user")
 @ParamLength(1)
-public class GetUserCommand implements RespCommand
-{
+public class GetUserCommand implements RespCommand {
   @Autowired
   private UserRepository userRepository;
 
   @Override
-  public RedisToken execute(Request request)
-  {
+  public RedisToken execute(Request request) {
     SafeString userId = request.getParam(0);
 
     Optional<User> userOptional = userRepository.findById(userId.toString());
@@ -34,13 +32,11 @@ public class GetUserCommand implements RespCommand
     return userOptional.map(this::toArray).orElse(notFound(userId));
   }
 
-  private RedisToken notFound(SafeString userId)
-  {
+  private RedisToken notFound(SafeString userId) {
     return error("user not found: " + userId);
   }
 
-  private RedisToken toArray(User user)
-  {
+  private RedisToken toArray(User user) {
     return array(string("id"), string(user.getId()), string("name"), string(user.getName()));
   }
 }
